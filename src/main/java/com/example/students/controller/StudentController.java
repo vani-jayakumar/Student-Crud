@@ -29,7 +29,12 @@ public class StudentController {
     {
         return studentService.getAllStudent();
     }
-
+    @GetMapping("/students/{id}")
+    public Student
+    getStudentById(@RequestBody Student student,
+                   @PathVariable("id") int studentid){
+        return studentService.getStudentById(studentid);
+    }
 
     @PutMapping("/students/{id}")
     public Student
