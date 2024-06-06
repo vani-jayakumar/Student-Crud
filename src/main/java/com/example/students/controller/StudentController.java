@@ -37,6 +37,7 @@ public class StudentController {
             return studentService.getAllStudent();
         }
     }
+
     @GetMapping("/students/{id}")
     public Student
     getStudentById(@RequestBody Student student,
