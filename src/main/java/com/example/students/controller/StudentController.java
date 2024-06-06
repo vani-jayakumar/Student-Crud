@@ -25,9 +25,17 @@ public class StudentController {
 
 
     @GetMapping("/students")
-    public List<Student> getAllStudent()
-    {
-        return studentService.getAllStudent();
+
+        public List<Student> getAllStudent(
+                @RequestParam(value = "name", required = false) String studentName,
+                @RequestParam(value = "subject", required = false) String studentSubject) {
+        if (studentName != null) {
+            return studentService.getStudentsByName(studentName);
+        } else if (studentSubject != null) {
+            return studentService.getStudentsBySubject(studentSubject);
+        }else{
+            return studentService.getAllStudent();
+        }
     }
     @GetMapping("/students/{id}")
     public Student

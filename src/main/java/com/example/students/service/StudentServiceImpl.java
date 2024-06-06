@@ -5,6 +5,7 @@ import com.example.students.repository.StudentRepository;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -26,15 +27,25 @@ public class StudentServiceImpl implements StudentService {
         return (List<Student>)
                 studentRepository.findAll();
     }
-@Override
-    public Student getStudentById(int studentId){
-        return studentRepository.findById(studentId).get();
+    @Override
+    public List<Student> getStudentsByName(String studentName) {
+        return studentRepository.findByStudentName(studentName);
     }
-@Override
+
+    @Override
+    public List<Student> getStudentsBySubject(String studentSubject) {
+        return studentRepository.findByStudentSubject(studentSubject);
+    }
+    @Override
+    public Student getStudentById(int studentId){
+
+    return studentRepository.findById(studentId).get();
+    }
+    @Override
     public Student updateStudent(Student student, int studentId) {
        return studentRepository.save(student);
     }
-@Override
+    @Override
     public void deleteStudentById(int studentId) {
         studentRepository.deleteById(studentId);
     }
