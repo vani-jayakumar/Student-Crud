@@ -30,9 +30,9 @@ public class StudentController {
                 @RequestParam(value = "name", required = false) String studentName,
                 @RequestParam(value = "subject", required = false) String studentSubject) {
         if (studentName != null) {
-            return studentService.getStudentsByName(studentName);
+            return studentService.getStudentsByNameStartingWith(studentName);
         } else if (studentSubject != null) {
-            return studentService.getStudentsBySubject(studentSubject);
+            return studentService.getStudentsBySubjectStartingWith(studentSubject);
         }else{
             return studentService.getAllStudent();
         }

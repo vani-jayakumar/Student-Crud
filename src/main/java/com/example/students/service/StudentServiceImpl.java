@@ -30,13 +30,13 @@ public class StudentServiceImpl implements StudentService {
                 studentRepository.findAll();
     }
     @Override
-    public List<Student> getStudentsByName(String studentName) {
-        return studentRepository.findByStudentName(studentName);
+    public List<Student> getStudentsByNameStartingWith(String studentName) {
+        return studentRepository.findByStudentNameStartingWithIgnoreCase(studentName);
     }
 
     @Override
-    public List<Student> getStudentsBySubject(String studentSubject) {
-        return studentRepository.findByStudentSubject(studentSubject);
+    public List<Student> getStudentsBySubjectStartingWith(String studentSubject) {
+        return studentRepository.findByStudentSubjectStartingWithIgnoreCase(studentSubject);
     }
     @Override
     public Student getStudentById(int studentId){

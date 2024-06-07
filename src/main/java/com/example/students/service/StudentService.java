@@ -12,8 +12,8 @@ public interface StudentService {
 
     // Read operation
     List<Student> getAllStudent();
-    List<Student> getStudentsByName(String studentName);
-    List<Student> getStudentsBySubject(String studentSubject);
+    List<Student> getStudentsByNameStartingWith(String studentName);
+    List<Student> getStudentsBySubjectStartingWith(String studentSubject);
     Student getStudentById(int studentId);
 
     // Update operation
