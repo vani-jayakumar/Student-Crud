@@ -29,29 +29,32 @@ public class StudentController {
         public List<Student> getAllStudent(
                 @RequestParam(value = "name", required = false) String studentName,
                 @RequestParam(value = "subject", required = false) String studentSubject) {
-        if (studentName != null) {
+        if(studentName != null &&  studentSubject != null){
+            return studentService.getStudentsByNameStartingWithAndSubjectStartingWith(studentName,studentSubject);
+        }else if(studentName != null) {
             return studentService.getStudentsByNameStartingWith(studentName);
         } else if (studentSubject != null) {
             return studentService.getStudentsBySubjectStartingWith(studentSubject);
         }else{
-            return studentService.getAllStudent();
+                return studentService.getAllStudent();
+            }
         }
-    }
+
 
     @GetMapping("/students/{id}")
     public Student
     getStudentById(@RequestBody Student student,
-                   @PathVariable("id") int studentid){
-        return studentService.getStudentById(studentid);
+                   @PathVariable("id") int studentId){
+        return studentService.getStudentById(studentId);
     }
 
     @PutMapping("/students/{id}")
     public Student
     updateStudent(@RequestBody Student student,
-                     @PathVariable("id") int studentid)
+                     @PathVariable("id") int studentId)
     {
         return studentService.updateStudent(
-                student, studentid);
+                student, studentId);
     }
     @DeleteMapping("/students/{id}")
     public String deleteStudentById(@PathVariable("id")

@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
 @Override
     public Student saveStudent(Student student)
     {
-         return studentRepository.save(student);
+        return studentRepository.save(student);
     }
 
 @Override
@@ -38,6 +38,12 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudentsBySubjectStartingWith(String studentSubject) {
         return studentRepository.findByStudentSubjectStartingWithIgnoreCase(studentSubject);
     }
+
+    @Override
+    public List<Student> getStudentsByNameStartingWithAndSubjectStartingWith(String studentName, String studentSubject) {
+        return studentRepository.findByStudentNameStartingWithIgnoreCaseAndStudentSubjectStartingWithIgnoreCase(studentName,studentSubject);
+    }
+
     @Override
     public Student getStudentById(int studentId){
 
