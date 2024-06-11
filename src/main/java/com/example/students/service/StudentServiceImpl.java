@@ -4,8 +4,9 @@ import com.example.students.entity.Student;
 import com.example.students.repository.StudentRepository;
 
 import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -51,8 +52,23 @@ public class StudentServiceImpl implements StudentService {
     }
     @Override
     public Student updateStudent(Student student, int studentId) {
-       return studentRepository.save(student);
+        Student existingStudent = studentRepository.findById(studentId).orElse(null);
+        if (existingStudent != null) {
+            if (student.getStudentName() != null) {
+                existingStudent.setStudentName(student.getStudentName());
+            }
+            if (student.getStudentClass() != null) {
+                existingStudent.setStudentClass(student.getStudentClass());
+            }
+            if (student.getStudentSubject() != null) {
+                existingStudent.setStudentSubject(student.getStudentSubject());
+            }
+            return studentRepository.save(existingStudent);
+        } else {
+            throw new IllegalArgumentException("Student not found");
+        }
     }
+
     @Override
     public void deleteStudentById(int studentId) {
         studentRepository.deleteById(studentId);

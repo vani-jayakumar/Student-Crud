@@ -23,7 +23,7 @@ import jakarta.persistence.Id;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studentId;
     private String studentName;
     private String studentClass;
