@@ -3,7 +3,11 @@ package com.example.students.controller;
 import com.example.students.entity.Student;
 import com.example.students.service.StudentService;
 
+import java.io.IOException;
 import java.util.List;
+
+import com.example.students.util.ExcelGenerator;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +67,17 @@ public class StudentController {
         studentService.deleteStudentById(
                 studentId);
         return "Deleted Successfully";
+    }
+    @GetMapping("/students/downloadAsExcel")
+    public void exportIntoExcelFile(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=student" + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        List <Student> listOfStudents = studentService.getAllStudent();
+        ExcelGenerator generator = new ExcelGenerator(listOfStudents);
+        generator.generateExcelFile(response);
     }
 }
