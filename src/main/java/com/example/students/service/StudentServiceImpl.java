@@ -3,11 +3,14 @@ package com.example.students.service;
 import com.example.students.entity.Student;
 import com.example.students.repository.StudentRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 
+import com.example.students.util.ExcelUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -72,6 +75,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudentById(int studentId) {
         studentRepository.deleteById(studentId);
+    }
+
+
+    @Override
+    public void uploadFile(MultipartFile file) {
+        try {
+            List<Student> studentList = ExcelUploader.excelToStudentList(file.getInputStream());
+
+            studentRepository.saveAll(studentList);
+        } catch (IOException ex) {
+            throw new RuntimeException("Excel data is failed to store: " + ex.getMessage());
+        }
     }
 
 

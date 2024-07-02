@@ -2,6 +2,7 @@ package com.example.students.service;
 
 import com.example.students.entity.Student;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,11 +22,9 @@ public interface StudentService {
     Student updateStudent(Student student,
                                 int studentId);
 
-
-
     // Delete operation
     void deleteStudentById(int studentId);
 
-
+    void uploadFile(MultipartFile file);
 
 }
