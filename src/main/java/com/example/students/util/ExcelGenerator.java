@@ -25,6 +25,7 @@ public class ExcelGenerator {
         createCell(row, 1, "Name");
         createCell(row, 2, "Class");
         createCell(row, 3, "Subject");
+        createCell(row, 4, "Email");
     }
     private void createCell(Row row, int columnCount, Object valueOfCell) {
         sheet.autoSizeColumn(columnCount);
@@ -48,6 +49,7 @@ public class ExcelGenerator {
             createCell(row, columnCount++, record.getStudentName());
             createCell(row, columnCount++, record.getStudentClass());
             createCell(row, columnCount++, record.getStudentSubject());
+            createCell(row, columnCount++, record.getStudentEmail());
         }
     }
     public void generateExcelFile(HttpServletResponse response) throws IOException {

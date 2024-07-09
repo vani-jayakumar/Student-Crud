@@ -51,6 +51,9 @@ public class ExcelUploader {
                         case 3:
                             student.setStudentSubject(currentCell.getStringCellValue());
                             break;
+                        case 4:
+                            student.setStudentEmail(currentCell.getStringCellValue());
+                            break;
                         default:
                             break;
                     }

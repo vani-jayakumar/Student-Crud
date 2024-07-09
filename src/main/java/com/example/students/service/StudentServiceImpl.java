@@ -1,15 +1,18 @@
 package com.example.students.service;
 
 import com.example.students.entity.Student;
+import com.example.students.exception.StudentNotFoundException;
 import com.example.students.repository.StudentRepository;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 
 import com.example.students.util.ExcelUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -49,9 +52,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getStudentById(int studentId){
-
-    return studentRepository.findById(studentId).get();
+    public Student getStudentById(int studentId) {
+        Optional<Student> student = studentRepository.findById(studentId);
+        if (student.isPresent()) {
+            return student.get();
+        } else {
+            throw new StudentNotFoundException("Student with ID " + studentId + " not found");
+        }
     }
     @Override
     public Student updateStudent(Student student, int studentId) {
@@ -66,17 +73,23 @@ public class StudentServiceImpl implements StudentService {
             if (student.getStudentSubject() != null) {
                 existingStudent.setStudentSubject(student.getStudentSubject());
             }
+            if (student.getStudentEmail() != null) {
+                existingStudent.setStudentEmail(student.getStudentEmail());
+            }
             return studentRepository.save(existingStudent);
         } else {
             throw new IllegalArgumentException("Student not found");
         }
     }
-
     @Override
-    public void deleteStudentById(int studentId) {
-        studentRepository.deleteById(studentId);
+  public void deleteStudentById(int studentId) {
+        Optional<Student> student = studentRepository.findById(studentId);
+        if (student.isPresent()) {
+            studentRepository.deleteById(studentId);
+        } else {
+            throw new StudentNotFoundException("Student with ID " + studentId + " not found");
+        }
     }
-
 
     @Override
     public void uploadFile(MultipartFile file) {
@@ -88,6 +101,4 @@ public class StudentServiceImpl implements StudentService {
             throw new RuntimeException("Excel data is failed to store: " + ex.getMessage());
         }
     }
-
-
 }
